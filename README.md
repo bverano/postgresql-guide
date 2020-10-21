@@ -43,11 +43,11 @@ Command:
 Example:
 
 > CREATE TABLE person (\
-> &nbsp;&nbsp;&nbsp;&nbsp;id BIGSERIAL NOT NULL PRIMARY KEY,
-> &nbsp;&nbsp;&nbsp;&nbsp;first_name VARCHAR(50) NOT NULL,
-> &nbsp;&nbsp;&nbsp;&nbsp;last_name VARCHAR(50) NOT NULL,
-> &nbsp;&nbsp;&nbsp;&nbsp;gender VARCHAR(6) NOT NULL,
-> &nbsp;&nbsp;&nbsp;&nbsp;date_of_birth DATE NOT NULL
+> &nbsp;&nbsp;&nbsp;&nbsp;id BIGSERIAL NOT NULL PRIMARY KEY,\
+> &nbsp;&nbsp;&nbsp;&nbsp;first_name VARCHAR(50) NOT NULL,\
+> &nbsp;&nbsp;&nbsp;&nbsp;last_name VARCHAR(50) NOT NULL,\
+> &nbsp;&nbsp;&nbsp;&nbsp;gender VARCHAR(6) NOT NULL,\
+> &nbsp;&nbsp;&nbsp;&nbsp;date_of_birth DATE NOT NULL\
 > );
 
 <small>PostgreSQL Datatypes: https://www.postgresql.org/docs/9.5/datatype.html</small>
