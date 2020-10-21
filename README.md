@@ -137,7 +137,7 @@ Command:
 - => Greater or equal than
 - <> Not equal
 
-## Limit
+## LIMIT
 
 If you want to limit the length of the response from the database you can use the **LIMIT** keyword.
 
@@ -154,3 +154,20 @@ A real use case for this command is when you want to implement pagination in you
 Command:
 
 > SELECT \* FROM table_name OFFSET number;
+
+## IN
+
+Lets suppose we have a Customers Table where we stored the names, ages and emails from a store's customers. One day the manager asks us to find in our database all the customers whose names are 'John', 'Mario', 'Carl' or 'Lewis'. We can be tempted to use a **WHERE** clause combined with some **OR** ones, but it may made our query innecesarly large.
+With the **IN** keyword, we could solve this by just passing an array with the values we want to use as filter.
+
+Command:
+
+> SELECT \* FROM table_name WHERE column_name IN (value1, value2, value3 ...);
+
+## BETWEEN
+
+When we want to filter data using as constraint that some column must be between two values, we can use the **BETWEEN** keyword.
+
+Command:
+
+> SELECT \* FROM table_name WHERE column_name BETWEEN value1 AND value2;
