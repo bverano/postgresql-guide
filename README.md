@@ -171,3 +171,59 @@ When we want to filter data using as constraint that some column must be between
 Command:
 
 > SELECT \* FROM table_name WHERE column_name BETWEEN value1 AND value2;
+
+## LIKE
+
+It is useful when we want to filter records which selected column **contains** a piece of information.  
+For example, if we have a table with user's emails and we want to filter the ones who have a ".com" sufix email, we should use the **LIKE** keyword.
+
+Command:
+
+- Data with a suffix
+
+  > SELECT \* FROM table_name WHERE column_name LIKE '%anything';
+
+- Data with a prefix
+
+  > SELECT \* FROM table_name WHERE column_name LIKE 'anything%';
+
+- Data with something in the middle
+
+  > SELECT \* FROM table_name WHERE column_name LIKE '%anything%';
+
+- Data with a number of characters before or after
+  > SELECT \* FROM table_name WHERE column_name LIKE '\_\_\_anything%';\
+  > <small>One undersocre means one character and you can put them at any place you want.</small>
+
+## ILIKE
+
+Does the same thing that **LIKE**, but it doesn't care about if the parameter is in lower or uppercase.
+
+Command:
+
+> SELECT \* FROM table_name WHERE column_name ILIKE '%anYtHiNg';
+
+## GROUP BY
+
+Imagine that you work for a travel agency and you have customers all around the world. Some day, you want to know the distribution of your customers based on their country of birth, so you can redistribute your sales force in proportion of that.
+In order to solve that we can use the **GROUP BY** keyword along with the **COUNT** function.
+
+Command:
+
+> SELECT column_name, AGGREGATE_FUNC(\*) FROM table_name GROUP BY column_name;
+
+If you want to add a restriction to your query, for example in the case proposed lines up, you want to get the countries that have more than 100 customers of your store, so you can focus on them, you can use the **HAVING** keyword.
+
+Command:
+
+> SELECT column_name, AGGREGATE_FUNC(\*) FROM table_name GROUP BY column_name HAVING AGGREGATE_FUNC(\*) > number;
+
+Solving the examples:
+
+<small>Get the count of customers grouped by country of birth, ordered by that count descendingly</small>
+
+> SELECT country_of_birth, COUNT(\*) FROM customers GROUP BY country_of_birth ORDER BY COUNT(\*) DESC;
+
+<small>Get the countries where you have more than 100 customers.</small>
+
+> SELECT country_of_birth, COUNT(\*) FROM customers GROUP BY country_of_birth HAVING COUNT(\*) \> 100 ORDER BY COUNT(\*) DESC;
