@@ -227,3 +227,74 @@ Solving the examples:
 <small>Get the countries where you have more than 100 customers.</small>
 
 > SELECT country_of_birth, COUNT(\*) FROM customers GROUP BY country_of_birth HAVING COUNT(\*) \> 100 ORDER BY COUNT(\*) DESC;
+
+## MAX, MIX and AVG
+
+When you have a trable with some numerical column, you may want to ask for the maximun, minimum or even the average value of all of them. For this purposes we could use de **MAX, MIN or AVG** keywords.
+
+Command:
+
+> SELECT MAX(column_name) FROM table_name;
+> SELECT MIN(column_name) FROM table_name;
+> SELECT AVG(column_name) FROM table_name;
+
+## ROUND
+
+If you are using the **AVG** operator , you may want to limit the decimals of the result.
+This could be done with the **ROUND** operator.
+
+Command:
+
+> SELECT ROUND(AVG(column_name), num_of_decimals) FROM table_name;
+
+<small>If you don't specify a number of decimals, it would take it's default value: 0</small>
+
+## GROUP BY with MAX / MIN / AVG
+
+Imagine that you work for a Rent a Car Company and you have a table with all the cars you offer and their prices. This table has the make, model and price of the cars.
+Some day, you want to add a VIP line of cars with every make you have available. So you want to ask your database for the most expensive prices you have for every make.
+This could be easily done combining the **MAX** operator with a **GROUP BY** one.
+
+Solution:
+
+> SELECT make, MAX(price) FROM car GROUP BY make;
+
+On a general form, we could have something like this.
+
+Command:
+
+> SELECT column_name, OPERATOR(numerical_column_name) FROM table_name GROUP BY column_name;
+
+## SUM
+
+It helps you to sum all the numerical values of a column and send it to you as a response.
+
+Command:
+
+> SELECT SUM(column_name) FROM table_name;
+
+It works similar to **MAX, MIN and AVG** when you want to group data with **GROUP BY**.
+
+## ARITMETHIC OPERATORS
+
+Imagine that you work in a supermarket and you are on the black friday's season. So all your products should be at half price. If you want to ask your database for the new prices, maybe for creating new labels for the products or something like that, you should use the multiply operator:
+
+> SELECT column_name, ROUND(price \* 0.5) FROM products;
+
+You can use this operators:
+
+- \- (subtraction)
+- \+ (adition)
+- \* (multiplication)
+- / (division)
+- % (module)
+
+## ALIAS
+
+When we are using operators, the columns of their results on the response are not the best. So we can assign them a new one using the **AS** keyword.
+
+Command:
+
+> SELECT ROUND(column_name \* 0.5) AS new_value from table_name;
+
+<small>Psdt: It could be use with any response, not only for operators.</small>
