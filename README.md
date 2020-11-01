@@ -298,3 +298,94 @@ Command:
 > SELECT ROUND(column_name \* 0.5) AS new_value from table_name;
 
 <small>Psdt: It could be use with any response, not only for operators.</small>
+
+## COALESCE
+
+It helps you when you want to set a default value, when the result of a query is null.
+For example, if you have an email column of a customer table and some of the rows have that field empty. You might want to see a default text instead of an empty space. For that situations you have the **COALESCE** keyword.
+
+Command:
+
+> SELECT COALESCE(column_name1, column_name2, ..., default_value) FROM table_name;
+
+<small>Psdt: If the results of all the values for the columns provided on the query are null, the default_value will be show.</small>
+
+## NULLIF
+
+As basic math we know that we can't divide a number by 0. In Postgres, if we make a query of a division and we a zero as denominator, we will have an error. For handling this error and recieve a defaul value for this kind of query we can use the **NULLIF** operator combined with the **COALESCE** keyword.
+
+Command:
+
+> SELECT COALESCE(10 / NULLIF(some_result_that_could_be_zero,0), 0);
+
+<small>NULLIF(a,b) will return null if a=b</small>
+
+## Working with dates
+
+We have some funciton in Postgres that help us with information about the actual date in different formats.
+If we want to recieve a timestamp for the actual time we use the **NOW()** function and it will give us a result like this _2020-10-31 19:18:54.873047-05_. But if we just want the date without the time, we may want to use this expression **NOW()::DATE** and we will recieve this kind of output _2020-10-31_. Finally, if we want just the actual time and not the date, we use **NOW()::TIME** and we will recieve this kind output _19:23:33.724938_
+
+<small>We must use a <b>SELECT</b> statement before any of those function we saw. Example: SELECT NOW()::TIME;</small>
+
+## Adding and subtracting with dates
+
+If, for some reason we want to know the date minus some interval of time, we can use the **INTERVAL** keyword as follows.
+
+Command:
+
+> SELECT NOW() - / + INTERVAL 'number period_of_time';
+
+<small>
+Period of Time parameter could have these values:
+<ul>
+  <li>YEAR(S)</li>
+  <li>MONTH(S)</li>
+  <li>WEEK(S)</li>
+  <li>DAY(S)</li>
+</ul>
+</small>
+
+## Extracting values from a date
+
+If we want to extract any part of a date, we can use the **EXTRACT()** function as follows.
+
+Command:
+
+> SELECT EXTRACT(part_for_extraction FROM NOW());
+
+<small>
+Part for Extraction could have these values:
+<ul>
+  <li>YEAR</li>
+  <li>MONTH</li>
+  <li>WEEK</li>
+  <li>DAY</li>
+  <li>DOW</li>
+  <li>CENTURY</li>
+</ul>
+</small>
+
+## AGE
+
+If we have a customers' table and we want to know their ages for any campaign or special data analysis, we can use the **AGE** function.
+
+Command:
+
+> SELECT AGE(NOW(), date_column_name) FROM table_name;
+
+## PRIMARY KEYS
+
+Prikary keys are use as a unique identifier for each record in our tables. The best analogy for this is the ID or the passport number, which are your unique identifier as a citizen of your country.
+In Postgres we can use a combination of the **BIGSERIAL** type and the **PRIMARY KEY** constraint to create a primary key column:
+
+> CREATE TABLE (\
+> &nbsp;&nbsp;&nbsp;&nbsp;id BIGSERIAL PRIMARY KEY\
+> );
+
+We can also give a column the **PRIMARY KEY** constraint after we create a table. That could be achieved as follows:
+
+> ALTER TABLE table_name ADD PRIMARY KEY(primary_key_column_name);
+
+And we can also delete that **PRIMARY KEU** constraint.
+
+> ALTER TABLE table_name DROP CONSTRAINT constraint_name;
