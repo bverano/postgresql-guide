@@ -389,3 +389,65 @@ We can also give a column the **PRIMARY KEY** constraint after we create a table
 And we can also delete that **PRIMARY KEU** constraint.
 
 > ALTER TABLE table_name DROP CONSTRAINT constraint_name;
+
+## UNIQUE
+
+Sometimes, in addition to the Primary Key, we want to keep some columns of our tables with non-duplicated values. For example, that would be the case for an email field, which should be related for only one person. For these cases we can add the **UNIQUE** constraint to our table as follows.
+
+Command:
+
+> ALTER TABLE table_name ADD CONSTRAINT constraint_name UNIQUE(unique_column_name);
+
+If we want Postgres to assign the name of the constraint we can simplify the query:
+
+> ALTER TABLE table_name ADD UNIQUE(unique_column_name);
+
+We can also drop that constraint:
+
+> ALTER TABLE table_name DROP CONSTRAINT constraint_name;
+
+## CHECK
+
+Lets imagine that we have a gender column in our customers table and for corporative reasons we just want to limit that field to 'Female' and 'Male' values, so we have to make sure that Postgres doesn't let us insert any user with a different gender. In order to achieve that we can use the **CHECK** constraint.
+
+Command:
+
+> ALTER TABLE table_name ADD CONSTRAINT constraint_name CHECK(column_name = value1 OR column_name - value2);
+
+## DELETE
+
+Sometimes we might want to delete some row(s) in our table. In order to do that we can use the **DELETE** keyword.
+
+Command:
+
+> DELETE FROM table_name WHERE column_name = value;
+
+<small>WARNING: If we execute this query without setting any 'WHERE' condition, we will delete all the rows from it.</small>
+
+## UPDATE
+
+In order to update some rows of our tables we must use the **UPDATE** command.
+
+Command:
+
+> UPDATE table_name SET column_name1 = value1 WHERE column_name2 = value2;
+
+<small>WARNING: If we execute this query without setting any 'WHERE' condition, we will update all the rows from it whit the setted value.</small>
+
+## ON CONFLICT
+
+The **ON CONFLICT** keyword helps us when we want to handle a possible exception on a **INSERT** query.
+
+Command:
+
+> INSERT INTO table_name (column_name1, column_name2, ...) VALUES (value1, value2, ...) ON CONFLICT (column_name) DO NOTHING;
+
+<small>WARNING: We can pass columns with UNIQUE or PRIMARY KEY constraints as ON CONFLICT's parameter.</small>
+
+## UPSERT
+
+Sometimes we have multiple calls to our database from the same user with almost the same information. For example, on a sign up form, lets imagine that some user submitted it and few seconds later he change his mind with the email he provided us. That call might throw an exception and the data he sent us won't be updated. In that case we might want to use the and upsert statement.
+
+Command:
+
+> INSERT INTO table_name (column_name1, column_name2, ...) VALUES (value1, value2, ...) ON CONFLICT (column_name) DO UPDATE SET column_name = EXCLUDED.column_name;
