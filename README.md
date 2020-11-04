@@ -462,7 +462,7 @@ We can set a foreign key column as follows.
 Command:
 
 > CREATE TABLE table_name (\
-> &nbsp;&nbsp;&nbsp;&nbsp;column_name DATATYPE REFERENCES reference_table_name (id)
+> &nbsp;&nbsp;&nbsp;&nbsp;column_name DATATYPE REFERENCES reference_table_name (id)\
 > );
 
 ## INNER JOINS
@@ -500,7 +500,7 @@ We are adding this extension to our database in order to generate aleatory uuids
 If we want to use a **UUID** as a primary key we should do something like this:
 
 > CREATE TABLE table_name (\
-> &nbsp;&nbsp;&nbsp;&nbsp;table_uid UUID NOT NULL PRIMARY KEY
+> &nbsp;&nbsp;&nbsp;&nbsp;table_uid UUID NOT NULL PRIMARY KEY\
 > );
 
 And if we want to insert a record, we can't omit the uuid in the query as we did with the **BIGSERIAL** or **SERIAL** IDs. We should instead do something like this:
