@@ -9,6 +9,8 @@
 - \l: Lists all databases.
   \d: Lists all tables on a database
 - \d table_name: Shows the structure of de table queried
+- \x: Enable expanded display
+- \df: Lists functions
 
 ## Creating Databases:
 
@@ -451,3 +453,58 @@ Sometimes we have multiple calls to our database from the same user with almost 
 Command:
 
 > INSERT INTO table_name (column_name1, column_name2, ...) VALUES (value1, value2, ...) ON CONFLICT (column_name) DO UPDATE SET column_name = EXCLUDED.column_name;
+
+## Foreign Keys and Relationships
+
+Lets imagine that we work on a store and we have an invoices table. We might want to know all the products related to that invoice with a single query, but it woould be redundant if we store all the products data every single time we create a new one. For solving that inefficiency we could use **FOREIGN KEYS** which are simply connectors between tables which can be used to stablish a relationship without storing unnecessary data.
+We can set a foreign key column as follows.
+
+Command:
+
+> CREATE TABLE table_name (\
+> &nbsp;&nbsp;&nbsp;&nbsp;column_name DATATYPE REFERENCES reference_table_name (id)
+> );
+
+## INNER JOINS
+
+The **JOIN** statements let us join related tables on a single response.
+We have some different ones, all of them with different approaches.
+**INNER JOIN** returns just the rows which have a relation with the othe referenced table. For example if we have a person and a car tables, we know that not all the people would have a car, so if we want to related both of the tables with **INNER JOIN**, thoseones who don't have a car will be omitted.
+
+Command:
+
+> SELECT \* FROM table1 JOIN table2 ON table1.fkey_column = table2.related_column;
+
+## LEFT JOINS
+
+It works similarly to an **INNER JOIN** but instead of excluding those rows which don't have a relationship, **LEFT JOIN** include them.
+So working with the case we saw before, we would get all the records of the person table and the ones who have a car, will have it's details next to their owners.
+
+![](img/sql-joins.jpg)
+
+## Sequences and Serials
+
+Postgres has two special types for numeric IDs: **SERIAL** and **BIGSERIAL**. They work almost in the same way, the only different is that the **SERIAL** type uses **INT** type and the **BIGSERIAL** uses **BIGINT**. This types set a function that autoincrements the value of the column every time we insert a row.
+
+If, for some reason we want to restar the sequence, we just have to type the following command:
+
+> ALTER SEQUENCE sequence_name RESTART WITH some_number;
+
+## UUID (Universally Unique Identifier)
+
+A UUID is a 16 bytes number used as a global identifier instead of numeric IDs. In order to work with UUIDs in Postgres we are going to use the **uuid-ossp** extension. For adding it to our database we should type the next command:
+
+> CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+We are adding this extension to our database in order to generate aleatory uuids for our tables.
+If we want to use a **UUID** as a primary key we should do something like this:
+
+> CREATE TABLE table_name (\
+> &nbsp;&nbsp;&nbsp;&nbsp;table_uid UUID NOT NULL PRIMARY KEY
+> );
+
+And if we want to insert a record, we can't omit the uuid in the query as we did with the **BIGSERIAL** or **SERIAL** IDs. We should instead do something like this:
+
+> INSERT INTO table_name (table_name_uid) VALUES (uuid_generate_v4());
+
+We are using the **uid_generate_v4()** function from the extension we imported before, in order to generate an aleatory uuid for our record.
